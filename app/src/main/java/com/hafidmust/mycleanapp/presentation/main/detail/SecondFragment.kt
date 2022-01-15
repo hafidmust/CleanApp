@@ -1,4 +1,4 @@
-package com.hafidmust.mycleanapp
+package com.hafidmust.mycleanapp.presentation.main.detail
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.hafidmust.mycleanapp.R
 import com.hafidmust.mycleanapp.databinding.FragmentSecondBinding
 
 /**

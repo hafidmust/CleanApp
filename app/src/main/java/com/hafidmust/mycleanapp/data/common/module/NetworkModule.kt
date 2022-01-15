@@ -24,7 +24,7 @@ object NetworkModule {
         return Retrofit.Builder().apply {
             addConverterFactory(GsonConverterFactory.create())
             client(oktHttpClient)
-            baseUrl(BuildConfig.API_BASE_URL)
+            baseUrl("https://golang-heroku.herokuapp.com/api/")
         }.build()
     }
 
