@@ -3,6 +3,7 @@ package com.hafidmust.mycleanapp.presentation.login
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -18,6 +19,7 @@ import com.hafidmust.mycleanapp.presentation.common.extension.isEmail
 import com.hafidmust.mycleanapp.presentation.common.extension.showGenericAlertDialog
 import com.hafidmust.mycleanapp.presentation.common.extension.showToast
 import com.hafidmust.mycleanapp.presentation.main.MainActivity
+import com.hafidmust.mycleanapp.presentation.register.RegisterActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -27,6 +29,11 @@ import javax.inject.Inject
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding : ActivityLoginBinding
     private val viewModel: LoginViewModel by viewModels()
+    private val openRegisterActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result ->
+        if (result.resultCode == RESULT_OK){
+            goToMainActivity()
+        }
+    }
 
     @Inject
     lateinit var pref: SharedPrefs
@@ -36,6 +43,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         login()
+        goToRegisterActivity()
         observe()
     }
 
@@ -44,7 +52,8 @@ class LoginActivity : AppCompatActivity() {
             val email = binding.emailEditText.text.toString().trim()
             val password = binding.passwordEditText.text.toString().trim()
             if (validate(email, password)){
-                viewModel.login(LoginRequest(email = email,password = password))
+                val loginRequest = LoginRequest(password = password, email = email)
+                viewModel.login(loginRequest)
             }
         }
     }
@@ -76,7 +85,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun goToMainActivity(){
-        startActivity(Intent(this, MainActivity::class.java))
+        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
         finish()
     }
 
@@ -113,5 +122,10 @@ class LoginActivity : AppCompatActivity() {
             return false
         }
         return true
+    }
+    private fun goToRegisterActivity(){
+        binding.registerButton.setOnClickListener {
+            openRegisterActivity.launch(Intent(this@LoginActivity,RegisterActivity::class.java))
+        }
     }
 }

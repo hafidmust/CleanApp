@@ -2,7 +2,7 @@ package com.hafidmust.mycleanapp.infrastructure.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-
+@Suppress("UNCHECKED_CAST")
 class SharedPrefs(private val context: Context) {
 
     private val sharedPref: SharedPreferences = context.getSharedPreferences(PREF, Context.MODE_PRIVATE)
@@ -28,6 +28,7 @@ class SharedPrefs(private val context: Context) {
             is Int -> editor.putInt(key, data)
             is Long -> editor.putLong(key, data)
         }
+        editor.apply()
     }
 
     fun saveToken(token: String){

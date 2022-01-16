@@ -1,5 +1,6 @@
 package com.hafidmust.mycleanapp.presentation.main
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -11,13 +12,20 @@ import android.view.Menu
 import android.view.MenuItem
 import com.hafidmust.mycleanapp.R
 import com.hafidmust.mycleanapp.databinding.ActivityMainBinding
+import com.hafidmust.mycleanapp.infrastructure.utils.SharedPrefs
+import com.hafidmust.mycleanapp.presentation.login.LoginActivity
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+
+    @Inject
+    lateinit var prefs: SharedPrefs
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +45,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun checkIsLoggedIn(){
+        if (prefs.getToken().isEmpty()){
+            goToLoginActivity()
+        }
+    }
+
+    private fun goToLoginActivity() {
+        startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+        finish()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
+    }
+
+    override fun onStart() {
+        super.onStart()
+        checkIsLoggedIn()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
