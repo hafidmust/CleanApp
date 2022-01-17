@@ -7,7 +7,7 @@ import com.hafidmust.mycleanapp.domain.product.ProductRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class DeleteProductById @Inject constructor(private val productRepository: ProductRepository) {
+class DeleteProductByIdUseCase @Inject constructor(private val productRepository: ProductRepository) {
     suspend fun invoke(id : String) : Flow<BaseResult<Unit, WrappedResponse<ProductResponse>>>{
         return productRepository.deleteProductById(id)
     }
