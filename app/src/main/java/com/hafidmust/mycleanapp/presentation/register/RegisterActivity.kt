@@ -26,11 +26,11 @@ import javax.inject.Inject
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityRegisterBinding
-
+    private val viewModel: RegisterViewModel by viewModels()
     @Inject
     lateinit var prefs: SharedPrefs
 
-    private val viewModel: RegisterViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
