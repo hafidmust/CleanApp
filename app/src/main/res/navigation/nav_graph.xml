@@ -14,6 +14,10 @@
         <action
             android:id="@+id/action_home_to_detail"
             app:destination="@id/DetailMainFragment" />
+        <action
+            android:id="@+id/action_home_to_create"
+            app:destination="@id/CreateMainFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/DetailMainFragment"
@@ -28,5 +32,18 @@
             app:popUpToInclusive="true"
             app:destination="@id/HomeMainFragment"/>
 
+    </fragment>
+    <fragment
+        android:label="@string/main_fragment_create"
+        android:name="com.hafidmust.mycleanapp.presentation.create.CreateMainFragment"
+        android:id="@+id/CreateMainFragment"
+        tools:layout="@layout/fragment_main_create">
+
+        <action
+            android:id="@+id/action_create_to_home"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true"
+            app:destination="@id/HomeMainFragment"/>
     </fragment>
 </navigation>

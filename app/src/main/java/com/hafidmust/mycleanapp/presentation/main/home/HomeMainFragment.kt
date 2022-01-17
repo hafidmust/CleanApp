@@ -40,7 +40,13 @@ class HomeMainFragment : Fragment(R.layout.fragment_main_home) {
         setupRecyclerView()
         observe()
         fetchMyProducts()
+        create()
 
+    }
+    private fun create(){
+        binding.fabCreate.setOnClickListener {
+            findNavController().navigate(R.id.action_home_to_create)
+        }
     }
 
     private fun fetchMyProducts(){
